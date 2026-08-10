@@ -24,22 +24,26 @@ USER_AGENTS = [
 ]
 
 NEIGHBORHOOD_KEYWORDS = {
-    "mission district": ["mission district", "mission dist", "the mission", "mission sf",
-                         "valencia", "guerrero", "24th street", "16th st mission",
-                         "bartlett", "shotwell", "folsom st", "south van ness",
-                         "capp st", "treat ave", "harrison st", "alabama st",
-                         "florida st", "bryant st", "york st", "hampshire"],
-    "hayes valley": ["hayes valley", "hayes st", "patricia's green", "hayes",
-                     "octavia", "laguna st", "buchanan st", "fell st",
-                     "oak st", "grove st", "ivy st", "linden st"],
-    "financial district": ["financial district", "fidi", "battery st", "front st",
-                           "sansome", "montgomery st", "california st", "pine st",
-                           "bush st", "embarcadero"],
+    "nob hill": ["nob hill", "lower nob hill", "california st", "jones st", "taylor st", "leavenworth st", "mason st", "post st", "sutter st", "bush st"],
+    "russian hill": ["russian hill", "lombard", "polk st", "hyde st", "green st", "vallejo st", "broadway", "filbert"],
+    "pacific heights": ["pacific heights", "pac heights", "lower pac heights", "lower pacific heights", "broadway", "jackson st", "washington st", "clay st", "sacramento st", "fillmore st"],
+    "cow hollow": ["cow hollow", "union st", "lombard st", "greenwich st", "filbert st"],
+    "north beach": ["north beach", "columbus ave", "grant ave", "telegraph hill", "coit tower", "washington sq"],
+    "fillmore district": ["fillmore district", "fillmore", "japantown", "geary blvd", "webster st"],
+    "nopa": ["nopa", "north of panhandle", "divisadero", "broderick st", "baker st", "mcallister st", "fulton st", "grove st"],
+    "mission district": ["mission district", "mission dist", "the mission", "valencia", "guerrero"],
+    "financial district": ["financial district", "fidi", "montgomery st", "bush st"],
 }
 
 NEIGHBORHOOD_BOUNDS = {
+    "Nob Hill": {"lat": (37.788, 37.796), "lng": (-122.420, -122.408)},
+    "Russian Hill": {"lat": (37.796, 37.806), "lng": (-122.425, -122.412)},
+    "Pacific Heights": {"lat": (37.788, 37.798), "lng": (-122.446, -122.422)},
+    "Cow Hollow": {"lat": (37.796, 37.804), "lng": (-122.446, -122.428)},
+    "North Beach": {"lat": (37.798, 37.808), "lng": (-122.414, -122.402)},
+    "Fillmore District": {"lat": (37.780, 37.788), "lng": (-122.438, -122.424)},
+    "NoPa": {"lat": (37.772, 37.778), "lng": (-122.448, -122.432)},
     "Mission District": {"lat": (37.748, 37.766), "lng": (-122.427, -122.406)},
-    "Hayes Valley": {"lat": (37.770, 37.780), "lng": (-122.432, -122.416)},
     "Financial District": {"lat": (37.790, 37.798), "lng": (-122.403, -122.394)},
 }
 
