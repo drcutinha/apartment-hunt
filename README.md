@@ -1,8 +1,8 @@
 # SF Apartment Hunt
 
-Automated apartment monitoring system for San Francisco. Monitors Craigslist, RentCast, Zillow, Zumper, and Redfin for 4+ bedroom apartments in Mission District and Hayes Valley under $10k/month.
+Automated apartment monitoring system for San Francisco. Monitors Craigslist, RentCast, Zillow, Zumper, and Redfin for Nob hill, Russian hill, lower Nob hill, pacific heights, north beach, cow hollow, lower pacific heights filmore district, nopa for 3bedroom price less than $8.5k
 
-**Live Dashboard**: [senduri919.github.io/apartment-hunt](https://senduri919.github.io/apartment-hunt)
+**Live Dashboard**: [drcutinha.github.io/apartment-hunt](https://drcutinha.github.io/apartment-hunt)
 
 ## How it works
 
