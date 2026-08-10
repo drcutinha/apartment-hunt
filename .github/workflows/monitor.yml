@@ -42,7 +42,7 @@ jobs:
         env:
           RENTCAST_API_KEY: ${{ secrets.RENTCAST_API_KEY }}
           RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
-          APIFY_API_KEY: ${{ secrets.APIFY_API_KEY }}
+          APIFY_API_KEY: ${{ secrets.APIFY_APIKEY }}
         run: python main.py collect
 
       - name: Process and score listings

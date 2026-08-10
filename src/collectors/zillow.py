@@ -25,19 +25,21 @@ class ZillowCollector(BaseCollector):
             return []
 
         search = self.config.search
-        url = "https://zillow-com1.p.rapidapi.com/propertyExtendedSearch"
+        url = "https://real-estate-zillow-com.p.rapidapi.com/v1/search/rent"
         params = {
             "location": f"{search.city}, {search.state}",
-            "home_type": "Apartments",
-            "rentMinPrice": 1000,
-            "rentMaxPrice": search.max_price,
-            "bedsMin": search.min_bedrooms,
-            "bathsMin": search.min_bathrooms,
-            "status_type": "ForRent",
+            "property_types": "apartment",
+            "min_price": 1000,
+            "max_price": search.max_price,
+            "min_beds": search.min_bedrooms,
+            "min_baths": search.min_bathrooms,
+            "sort": "relevant",
+            "page": 1,
         }
         headers = {
             "x-rapidapi-key": self.config.rapidapi_key,
-            "x-rapidapi-host": "zillow-com1.p.rapidapi.com",
+            "x-rapidapi-host": "real-estate-zillow-com.p.rapidapi.com",
+            "Content-Type": "application/json",
         }
 
         try:
