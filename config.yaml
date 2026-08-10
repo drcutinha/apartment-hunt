@@ -2,27 +2,23 @@ search:
   city: "San Francisco"
   state: "CA"
   neighborhoods:
-    - "Mission District"
-    - "Hayes Valley"
-    - "Financial District"
-  zip_codes:
-    - "94110"
-    - "94102"
-    - "94103"
-    - "94114"
-    - "94104"
-    - "94111"
-  min_bedrooms: 4
-  max_bedrooms: 4
-  min_bathrooms: 1
-  preferred_bathrooms: 2
-  max_price: 10000
+    - "Nob Hill"
+    - "Russian Hill"
+    - "Lower Nob Hill"
+    - "Pacific Heights"
+    - "North Beach"
+    - "Cow Hollow"
+    - "Lower Pacific Heights"
+    - "Fillmore District"
+    - "NoPa"
+  min_bedrooms: 3
+  max_bedrooms: 3
+  max_price: 8500
   move_in_deadline: "2026-10-31"
 
 scoring:
   weights:
     neighborhood: 25
-    bathroom_match: 15
     sqft: 12
     laundry: 10
     building_type: 8
@@ -38,7 +34,7 @@ notifications:
   enabled: true
   from_email: "onboarding@resend.dev"
   recipients:
-    - "saienduri09@gmail.com"
+    - "drcutinha@gmail.com"
   min_score_to_notify: 0
 
 collectors:
@@ -59,4 +55,4 @@ collectors:
 
 site:
   title: "SF Apartment Hunt"
-  base_url: "https://senduri919.github.io/apartment-hunt"
+  base_url: "https://drcutinha.github.io/apartment-hunt"
