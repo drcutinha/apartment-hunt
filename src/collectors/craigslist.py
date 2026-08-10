@@ -25,8 +25,22 @@ USER_AGENTS = [
 
 NEIGHBORHOOD_KEYWORDS = {
     "mission district": ["mission district", "mission dist", "the mission", "mission sf",
-                         "valencia", "guerrero", "24th street", "16th st mission"],
-    "hayes valley": ["hayes valley", "hayes st", "patricia's green", "hayes"],
+                         "valencia", "guerrero", "24th street", "16th st mission",
+                         "bartlett", "shotwell", "folsom st", "south van ness",
+                         "capp st", "treat ave", "harrison st", "alabama st",
+                         "florida st", "bryant st", "york st", "hampshire"],
+    "hayes valley": ["hayes valley", "hayes st", "patricia's green", "hayes",
+                     "octavia", "laguna st", "buchanan st", "fell st",
+                     "oak st", "grove st", "ivy st", "linden st"],
+    "financial district": ["financial district", "fidi", "battery st", "front st",
+                           "sansome", "montgomery st", "california st", "pine st",
+                           "bush st", "embarcadero"],
+}
+
+NEIGHBORHOOD_BOUNDS = {
+    "Mission District": {"lat": (37.748, 37.766), "lng": (-122.427, -122.406)},
+    "Hayes Valley": {"lat": (37.770, 37.780), "lng": (-122.432, -122.416)},
+    "Financial District": {"lat": (37.790, 37.798), "lng": (-122.403, -122.394)},
 }
 
 
@@ -40,6 +54,7 @@ class CraigslistCollector(BaseCollector):
         search = self.config.search
         params = {
             "min_bedrooms": search.min_bedrooms,
+            "max_bedrooms": search.max_bedrooms,
             "min_bathrooms": search.min_bathrooms,
             "max_price": search.max_price,
             "availabilityMode": 0,
@@ -65,18 +80,23 @@ class CraigslistCollector(BaseCollector):
             logger.warning("Craigslist: no entries found in RSS feed, trying HTML fallback")
             return self._collect_html_fallback()
 
-        listings = []
+        parsed = []
         for entry in feed.entries:
             listing = self._parse_entry(entry)
             if listing:
-                listings.append(listing)
+                parsed.append(listing)
 
-        logger.info(f"Craigslist: found {len(listings)} listings from RSS")
+        logger.info(f"Craigslist RSS: {len(parsed)} parsed, enriching first 30")
 
-        for listing in listings[:20]:
+        listings = []
+        for listing in parsed[:30]:
             self._enrich_listing(listing)
+            self._detect_neighborhood_by_coords(listing)
+            if self._matches_neighborhood(listing):
+                listings.append(listing)
             time.sleep(random.uniform(1.5, 3.0))
 
+        logger.info(f"Craigslist: found {len(listings)} listings matching neighborhoods")
         return listings
 
     def _parse_entry(self, entry: dict) -> Listing | None:
@@ -175,6 +195,7 @@ class CraigslistCollector(BaseCollector):
         search = self.config.search
         params = {
             "min_bedrooms": search.min_bedrooms,
+            "max_bedrooms": search.max_bedrooms,
             "min_bathrooms": search.min_bathrooms,
             "max_price": search.max_price,
             "availabilityMode": 0,
@@ -258,12 +279,16 @@ class CraigslistCollector(BaseCollector):
 
         logger.info(f"Craigslist HTML fallback: {len(listings)} listings before neighborhood filter")
 
+        enriched = []
         for listing in listings[:30]:
             self._enrich_listing(listing)
+            self._detect_neighborhood_by_coords(listing)
+            if self._matches_neighborhood(listing):
+                enriched.append(listing)
             time.sleep(random.uniform(1.5, 3.0))
 
-        logger.info(f"Craigslist HTML fallback: {len(listings)} listings after enrichment")
-        return listings
+        logger.info(f"Craigslist HTML fallback: {len(enriched)} listings after enrichment + neighborhood filter")
+        return enriched
 
     def _matches_neighborhood(self, listing: Listing) -> bool:
         if listing.neighborhood:
@@ -271,6 +296,7 @@ class CraigslistCollector(BaseCollector):
         text = f"{listing.address} {listing.description}".lower()
         for hood, keywords in NEIGHBORHOOD_KEYWORDS.items():
             if any(kw in text for kw in keywords):
+                listing.neighborhood = hood.title()
                 return True
         return False
 
@@ -280,6 +306,18 @@ class CraigslistCollector(BaseCollector):
             if any(kw in text_lower for kw in keywords):
                 return hood.title()
         return ""
+
+    def _detect_neighborhood_by_coords(self, listing: Listing):
+        if listing.neighborhood:
+            return
+        if not listing.latitude or not listing.longitude:
+            return
+        for hood, bounds in NEIGHBORHOOD_BOUNDS.items():
+            lat_min, lat_max = bounds["lat"]
+            lng_min, lng_max = bounds["lng"]
+            if lat_min <= listing.latitude <= lat_max and lng_min <= listing.longitude <= lng_max:
+                listing.neighborhood = hood
+                return
 
     def _extract_price(self, title: str) -> int | None:
         match = re.search(r'\$(\d{1,2}[,.]?\d{3})', title)
