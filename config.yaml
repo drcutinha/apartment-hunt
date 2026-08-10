@@ -11,6 +11,13 @@ search:
     - "Lower Pacific Heights"
     - "Fillmore District"
     - "NoPa"
+  zip_codes:
+    - "94109"
+    - "94115"
+    - "94123"
+    - "94133"
+    - "94117"
+    - "94108"
   min_bedrooms: 3
   max_bedrooms: 3
   max_price: 8500
@@ -21,14 +28,14 @@ scoring:
     neighborhood: 25
     sqft: 12
     laundry: 10
+    price: 12
     building_type: 8
     transit: 8
     parking: 6
+    move_in: 6
     pets: 5
     outdoor: 5
-    move_in: 6
     lease: 3
-    price: 5
 
 notifications:
   enabled: true
