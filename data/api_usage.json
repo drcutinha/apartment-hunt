@@ -1,9 +1,9 @@
 {
   "month": "2026-08",
   "calls": {
-    "rentcast": 2,
-    "zillow": 3,
-    "zumper": 2,
-    "redfin": 2
+    "rentcast": 3,
+    "zillow": 6,
+    "zumper": 4,
+    "redfin": 3
   }
 }
