@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ config.site.title }}</title>
+  <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>{{ config.site.title }}</h1>
+    <div class="subtitle">Mission District &amp; Hayes Valley &middot; 4+ Bed &middot; &le;$10k/mo &middot; Updated {{ generated_at }}</div>
+    <div class="stats-bar">
+      <div class="stat"><strong>{{ stats.total }}</strong> Active Listings</div>
+      <div class="stat"><strong>{{ stats.new_count }}</strong> New</div>
+      <div class="stat"><strong>{{ stats.avg_score }}</strong> Avg Score</div>
+      <div class="stat"><strong id="filtered-count">{{ stats.total }}</strong> Showing</div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="container">
+    <div class="filter-group">
+      <label>Neighborhood</label>
+      <select id="filter-neighborhood">
+        <option value="">All</option>
+        {% for hood in neighborhoods %}
+        <option value="{{ hood }}">{{ hood }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Status</label>
+      <select id="filter-status">
+        <option value="">All</option>
+        <option value="new">New</option>
+        <option value="contacted">Contacted</option>
+        <option value="toured">Toured</option>
+        <option value="favorite">Favorites</option>
+        <option value="rejected">Rejected</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Source</label>
+      <select id="filter-source">
+        <option value="">All</option>
+        {% for source in sources %}
+        <option value="{{ source }}">{{ source | capitalize }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Sort By</label>
+      <select id="sort-by">
+        <option value="score">Score (High → Low)</option>
+        <option value="price-low">Price (Low → High)</option>
+        <option value="price-high">Price (High → Low)</option>
+        <option value="sqft">Sqft (Largest)</option>
+        <option value="date">Newest First</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Search</label>
+      <input type="text" id="search-input" placeholder="Address, keyword...">
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="container">
+    <div class="grid" id="listings-grid">
+      <!-- Rendered by JavaScript -->
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>SF Apartment Hunt &middot; Monitoring Craigslist, RentCast, Zillow, Zumper, Redfin</p>
+    <p>Data refreshed every 12 hours &middot; <a href="https://github.com/senduri919/apartment-hunt" style="color:var(--primary);">GitHub</a></p>
+  </div>
+</footer>
+
+<script id="listings-data" type="application/json">{{ listings_json }}</script>
+<script src="static/app.js"></script>
+
+</body>
+</html>
